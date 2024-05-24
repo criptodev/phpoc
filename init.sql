@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS test;
+USE test;
+CREATE TABLE IF NOT EXISTS test (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+INSERT INTO test (name) VALUES VALUES ('dummy1'), ('dummy2'), ('dummy3');

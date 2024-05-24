@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_PORT=${DATABASE_PORT}
+    networks:
+      - my-network
+    depends_on:
+      - mysql-database
+  mysql-database:
+    image: mysql:5.7
+    ports:
+    - ${DATABASE_PORT}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    networks:
+      - my-network
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+networks:
+  my-network:
+    name: my-network
+volumes:
+  db_data:
